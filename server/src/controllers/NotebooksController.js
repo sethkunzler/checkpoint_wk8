@@ -6,7 +6,7 @@ export class NotebooksController extends BaseController {
   constructor() {
     super('api/notebooks')
     this.router
-
+      .get('/:notebookId', this.getNotebooksById)
       .use(Auth0Provider.getAuthorizedUserInfo) //middleware
       .get('', this.getNotebooks)
       .post('', this.createNotebook)
@@ -31,5 +31,14 @@ export class NotebooksController extends BaseController {
         next(error)
       }
     }
-
+    
+    async getNotebooksById(request, response, next) {
+      try {
+        const notebookId = request.params.notebookId
+        const notebook = await notebooksService.getNotebookById(notebookId)
+        response.send(notebook)
+      } catch (error) {
+        
+      }
+    }
 }

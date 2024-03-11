@@ -10,5 +10,9 @@ class NotebooksService {
     const notebooks = await dbContext.Notebooks.find({creatorId}).populate('creator')
     return notebooks 
   }
+  async getNotebookById(notebookId) {
+    const notebook = await dbContext.Notebooks.findById(notebookId).populate('creator', '-email')
+    return notebook
+  }
 }
 export const notebooksService = new NotebooksService
