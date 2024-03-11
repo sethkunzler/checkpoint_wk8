@@ -5,9 +5,6 @@
   <main>
     <router-view />
   </main>
-   <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
-  </footer>
 </template>
 
 <script>
@@ -29,9 +26,26 @@ export default {
 
 :root{
   --main-height: calc(100vh - 32px - 64px);
+  --orangutan-orange: #f2c64f; 
 }
-
-
+.o-orange {
+  color: var(--orangutan-orange);
+}
+.bg-o-orange {
+  background-color: var(--orangutan-orange);
+}
+.bold {
+  font-weight: bold;
+}
+.italic {
+  font-style: italic;
+}
+.text-shadow {
+  text-shadow: 1px 1px 4px black;
+}
+.text-glow {
+  text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.75);
+}
 footer {
   display: grid;
   place-content: center;
