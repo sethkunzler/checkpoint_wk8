@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 
 export const NotebookSchema = new Schema(
   {
-    title: {type: String, required: true, minlength: 3, maxlength: 25},
+    title: {type: String, required: true, minlength: 3, maxlength: 50},
     icon: {type: String, required: true, minlength:3, maxlength: 100},
     color: {type: String, required: true, length: 7}, // #FFFFFF hexadecimal string
     coverImg: {type: String, required: true, minlength: 1, maxlength: 500,},
@@ -14,5 +14,5 @@ NotebookSchema.virtual('creator', {
   localField: 'creatorId',
   foreignField: '_id',
   justOne: true,
-  ref: 'Profile'
+  ref: 'Account'
 })
