@@ -10,35 +10,49 @@ export class NotebooksController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo) //middleware
       .get('', this.getNotebooks)
       .post('', this.createNotebook)
+      // TODO update notebook
+      .put('/:notebookId', this.updateNotebook)
     }
 
-    async createNotebook(request, response, next) {
-      try {
-        const notebookData = request.body
-        notebookData.creatorId = request.userInfo.id
-        const notebook = await notebooksService.createNotebook(notebookData)
-        response.send(notebook)
-      } catch (error) {
-        next(error)
-      }
+  async createNotebook(request, response, next) {
+    try {
+      const notebookData = request.body
+      notebookData.creatorId = request.userInfo.id
+      const notebook = await notebooksService.createNotebook(notebookData)
+      response.send(notebook)
+    } catch (error) {
+      next(error)
     }
-    async getNotebooks(request, response, next) {
-      try {
-        const accountId = request.userInfo.id
-        const notebooks = await notebooksService.getNotebooks(accountId)
-        response.send(notebooks)
-      } catch (error) {
-        next(error)
-      }
+  }
+  async getNotebooks(request, response, next) {
+    try {
+      const accountId = request.userInfo.id
+      const notebooks = await notebooksService.getNotebooks(accountId)
+      response.send(notebooks)
+    } catch (error) {
+      next(error)
     }
-    
-    async getNotebooksById(request, response, next) {
-      try {
-        const notebookId = request.params.notebookId
-        const notebook = await notebooksService.getNotebookById(notebookId)
-        response.send(notebook)
-      } catch (error) {
-        
-      }
+  }
+  
+  async getNotebooksById(request, response, next) {
+    try {
+      const notebookId = request.params.notebookId
+      const notebook = await notebooksService.getNotebookById(notebookId)
+      response.send(notebook)
+    } catch (error) {
+      
     }
+  }
+
+  async updateNotebook(request, response, next) {
+    try {
+      const notebookId =  request.params.notebookId
+      const newData = request.body
+      const userId = request.userInfo.id 
+      const message = await notebooksService.updateNotebook(notebookId, newData, userId)
+      response.send(message)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
