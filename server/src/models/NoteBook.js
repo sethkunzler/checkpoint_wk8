@@ -19,6 +19,6 @@ NotebookSchema.virtual('creator', {
 NotebookSchema.virtual('entryCount', {
   localField: '_id',
   foreignField: 'notebookId',
-  justOne: true,
-  ref: 'Entry'
+  ref: 'Entry',
+  count: true,
 })

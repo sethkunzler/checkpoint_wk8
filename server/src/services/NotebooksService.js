@@ -7,11 +7,11 @@ class NotebooksService {
     return notebook
   }
   async getNotebooks(creatorId) {
-    const notebooks = await dbContext.Notebooks.find({creatorId}).populate('creator')
+    const notebooks = await dbContext.Notebooks.find({creatorId}).populate('creator').populate('entryCount')
     return notebooks 
   }
   async getNotebookById(notebookId) {
-    const notebook = await dbContext.Notebooks.findById(notebookId).populate('creator', '-email')
+    const notebook = await dbContext.Notebooks.findById(notebookId).populate('creator', '-email').populate('entryCount')
     return notebook
   }
 }
