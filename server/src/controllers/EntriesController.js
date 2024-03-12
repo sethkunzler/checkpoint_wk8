@@ -6,8 +6,10 @@ export class EntriesController extends BaseController {
   constructor() {
     super('api/entries')
     this.router
+      // .get('/:notebookId',)
       .use(Auth0Provider.getAuthorizedUserInfo)// middleware
       .post('', this.createEntry)
+      .get('', this.getMyEntries)
   }
   async createEntry(request, response, next) {
     try {
@@ -15,6 +17,15 @@ export class EntriesController extends BaseController {
       entryData.creatorId = request.userInfo.id
       const entry = await entriesService.createEntry(entryData)
       response.send(entry)
+    } catch (error) {
+      next(error)
+    }
+  }
+  async getMyEntries(request, response, next) {
+    try {
+      const accountId = request.userInfo.id 
+      const entries = await entriesService.getMyEntries(accountId)
+      response.send(entries)
     } catch (error) {
       next(error)
     }

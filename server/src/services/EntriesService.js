@@ -7,6 +7,10 @@ class EntriesService {
     await entry.populate('notebook')
     return entry
   }
+  async getMyEntries(accountId) {
+    const entries = await dbContext.Entries.find({creatorId : accountId}).populate('notebook')
+    return entries
+  }
 }
 
 export const entriesService = new EntriesService 
