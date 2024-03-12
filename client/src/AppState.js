@@ -7,5 +7,5 @@ export const AppState = reactive({
   // @ts-ignore
   account: {},
   /** @type {import('./models/Notebook.js').Notebook[]} */
-  Notebooks: []
+  notebooks: []
 })
