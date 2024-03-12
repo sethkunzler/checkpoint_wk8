@@ -10,8 +10,8 @@ export class NotebooksController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo) //middleware
       .get('', this.getNotebooks)
       .post('', this.createNotebook)
-      // TODO update notebook
       .put('/:notebookId', this.updateNotebook)
+      .delete('/:notebookId', this.deleteNotebook)
     }
 
   async createNotebook(request, response, next) {
@@ -40,7 +40,7 @@ export class NotebooksController extends BaseController {
       const notebook = await notebooksService.getNotebookById(notebookId)
       response.send(notebook)
     } catch (error) {
-      
+      next(error)
     }
   }
 
@@ -51,6 +51,17 @@ export class NotebooksController extends BaseController {
       const userId = request.userInfo.id 
       const message = await notebooksService.updateNotebook(notebookId, newData, userId)
       response.send(message)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async deleteNotebook(request, response, next) {
+    try {
+      const notebookId = request.params.notebookId
+      const userId = request.userInfo.id
+      await notebooksService.deleteNotebook(notebookId, userId)
+      response.send("Notebook successfully deleted")
     } catch (error) {
       next(error)
     }
