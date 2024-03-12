@@ -8,8 +8,9 @@
       </div>
     </section>
     <section class="row my-2">
+      <!-- v-for="notebook in notebooks" :key="notebook.id" -->
       <div class="col-md-6 d-flex">
-        <div class="tab rounded bg-dark shadow border border-subtle p-1"></div>
+        <div class="tab rounded bg-danger shadow border border-2 p-1"></div>
         <div class="rounded border border-subtle px-3 pt-1 shadow selectable">
           <h3>A Notebook</h3>
           <img class="img-fluid notebook-img" src="../assets/img/noter-logo.png" alt="filler">
