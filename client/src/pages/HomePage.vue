@@ -1,6 +1,6 @@
 <template>
   <!-- TODO fun landing page -->
-  <h1 class="text-center mt-2">Welcome to Noter!</h1>
+  <h1 class="text-center mt-2 italic">Welcome to Noter!</h1>
   <div class="container">
     <section class="row">
       <div class="col-md-12">
@@ -10,11 +10,11 @@
     <section class="row my-2">
       <!-- v-for="notebook in notebooks" :key="notebook.id" -->
       <div class="col-md-6 d-flex">
-        <div class="tab rounded bg-danger shadow border border-2 p-1"></div>
+        <div class="rounded bg-danger shadow border border-2 p-1"></div>
         <div class="rounded border border-subtle px-3 pt-1 shadow selectable">
           <h3>A Notebook</h3>
           <img class="img-fluid notebook-img" src="../assets/img/noter-logo.png" alt="filler">
-          <p class="text-end">Entries: 12</p>
+          <p class="text-end italic">Entries: <b>12</b></p>
         </div>
       </div>
     </section>
@@ -22,8 +22,18 @@
 </template>
 
 <script>
+import Pop from "../utils/Pop.js"
+
 export default {
   setup() {
+    onMounted(() => {getMyNotebooks()})
+    async function getMyNotebooks() {
+      try {
+        
+      } catch (error) {
+        Pop(error)
+      }
+    }
     return {
       
     }
@@ -50,10 +60,6 @@ export default {
       object-position: center;
     }
   }
-  .tab {
-
-  }
 }
 
-notebook-img {}
 </style>
