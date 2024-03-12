@@ -6,7 +6,6 @@ export class EntriesController extends BaseController {
   constructor() {
     super('api/entries')
     this.router
-      // .get('/:notebookId',)
       .use(Auth0Provider.getAuthorizedUserInfo)// middleware
       .post('', this.createEntry)
       .get('', this.getMyEntries)
