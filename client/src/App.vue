@@ -1,24 +1,54 @@
 <template>
-  <header>
+  <header class="sticky-top">
     <Navbar />
   </header>
   <main>
     <router-view />
   </main>
+<!-- NOTE off-canvas modal -->
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="myNotebooks" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">📓 My Notebooks</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="container">
+      <section class="row">
+        <div v-for="notebook in notebooks" :key="notebook.id" class="col-12 d-flex flex-row my-2">
+        <NotebookCard :notebook="notebook" />
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
 </template>
 
+
 <script>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import NotebookCard from './components/NotebookCard.vue'
+import { notebooksService } from "./services/NotebooksService.js";
+import Pop from "./utils/Pop.js";
 
 export default {
   setup() {
+    onMounted(() => {getMyNotebooks()})
+    async function getMyNotebooks() {
+      try {
+        await notebooksService.getMyNotebooks()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
     return {
-      appState: computed(() => AppState)
+      appState: computed(() => AppState),
+      account: computed(() => AppState.account),
+      notebooks: computed(() => AppState.notebooks)
     }
   },
-  components: { Navbar }
+  components: { Navbar, NotebookCard }
 }
 </script>
 <style lang="scss">

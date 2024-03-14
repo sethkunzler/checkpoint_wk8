@@ -11,6 +11,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
+        <button v-if="account" class="btn bg-o-orange text-dark selectable border border-subtle" type="button" data-bs-toggle="offcanvas" data-bs-target="#myNotebooks" aria-controls="offcanvasScrolling">📓 My Notebooks</button>
         <!-- REVIEW need a navbar? -->
         <!-- <ul class="navbar-nav me-auto">
           <li>
@@ -23,6 +24,7 @@
         <div>
           <button class="btn text-dark text-glow" @click="toggleTheme">
             <i class="mdi" :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i>
+            <!-- :class="theme == 'light' ? 'text-glow' : 'text-shadow'" -->
           </button>
         </div>
         <Login />
@@ -32,19 +34,19 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
+import { AppState } from '../AppState.js'
 export default {
   setup() {
-
     const theme = ref(loadState('theme') || 'light')
-
     onMounted(() => {
       document.documentElement.setAttribute('data-bs-theme', theme.value)
     })
 
     return {
+      account: computed(() => AppState.account),
       theme,
       toggleTheme() {
         theme.value = theme.value == 'light' ? 'dark' : 'light'
