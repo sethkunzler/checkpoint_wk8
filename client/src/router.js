@@ -17,6 +17,11 @@ const routes = [
     component: loadPage('AboutPage')
   },
   {
+    path: '/notebooks/:notebookId',
+    name: 'Notebook',
+    component: loadPage('ActiveNotebookPage')
+  },
+  {
     path: '/account',
     name: 'Account',
     component: loadPage('AccountPage'),

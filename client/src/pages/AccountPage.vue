@@ -4,7 +4,7 @@
     <img class="rounded" :src="account.picture" alt="" />
     <p>{{ account.email }}</p>
   </div>
-  <div class="container-fluid">
+  <div class="container">
     <section class="row">
       <div class="col-md-12">
         <h2>My Notebooks</h2>

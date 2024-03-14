@@ -29,19 +29,9 @@ import { computed, onMounted } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import NotebookCard from './components/NotebookCard.vue'
-import { notebooksService } from "./services/NotebooksService.js";
-import Pop from "./utils/Pop.js";
 
 export default {
   setup() {
-    onMounted(() => {getMyNotebooks()})
-    async function getMyNotebooks() {
-      try {
-        await notebooksService.getMyNotebooks()
-      } catch (error) {
-        Pop.error(error)
-      }
-    }
     return {
       appState: computed(() => AppState),
       account: computed(() => AppState.account),

@@ -11,7 +11,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
-        <button v-if="account" class="btn bg-o-orange text-dark selectable border border-subtle" type="button" data-bs-toggle="offcanvas" data-bs-target="#myNotebooks" aria-controls="offcanvasScrolling">📓 My Notebooks</button>
+        <button v-if="notebooks != []" class="btn bg-o-orange text-dark selectable border-dark border-subtle" type="button" data-bs-toggle="offcanvas" data-bs-target="#myNotebooks" aria-controls="offcanvasScrolling">📓 My Notebooks</button>
         <!-- REVIEW need a navbar? -->
         <!-- <ul class="navbar-nav me-auto">
           <li>
@@ -38,6 +38,7 @@ import { computed, onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
 import { AppState } from '../AppState.js'
+import { notebooksService } from "../services/NotebooksService.js";
 export default {
   setup() {
     const theme = ref(loadState('theme') || 'light')
@@ -46,7 +47,8 @@ export default {
     })
 
     return {
-      account: computed(() => AppState.account),
+      user: computed(() => AppState.user),
+      notebooks: computed(() => AppState.notebooks),
       theme,
       toggleTheme() {
         theme.value = theme.value == 'light' ? 'dark' : 'light'
