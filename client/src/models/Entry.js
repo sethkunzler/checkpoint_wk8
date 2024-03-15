@@ -12,5 +12,6 @@ export class Entry {
     this.updatedAt = new Date(data.updatedAt) || new Date()
     this.creator = data.creator ? new Account(data.creator) : null
     this.notebook = data.notebook ? new Notebook(data.notebook) : null 
+    // TODO header, hidden
   }
 }

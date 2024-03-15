@@ -4,6 +4,13 @@ import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class NotebooksService {
+  async createNotebook(notebookData) {
+    const response = await api.post('api/notebooks', notebookData)
+    logger.log('📡 Created Notebook', response.data)
+    const newNotebook = new Notebook(response.data)
+    AppState.notebooks.push(newNotebook)
+    return newNotebook
+  }
  
   async getMyNotebooks() {
     const response = await api.get('api/notebooks')

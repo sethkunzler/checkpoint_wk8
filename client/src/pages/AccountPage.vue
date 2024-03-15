@@ -11,7 +11,6 @@
       </div>
     </section>
     <section class="row my-2">
-      <!-- TODO put in an offcanvas to meet release requirements -->
       <div v-for="notebook in notebooks" :key="notebook.id" class="col-md-4 d-flex my-2">
         <NotebookCard :notebook="notebook" />
         <!-- <div class="rounded shadow border border-2 p-1"
@@ -44,7 +43,7 @@ export default {
     }
     return {
       account: computed(() => AppState.account),
-      notebooks: computed(() => AppState.notebooks)
+      notebooks: computed(() => AppState.notebooks.slice(0,9))
     }
   },
   components: { NotebookCard }
