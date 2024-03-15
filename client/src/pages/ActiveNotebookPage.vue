@@ -13,10 +13,23 @@
             </h1>
         </div>
         <div class="col-md-10">
-          <div v-for="entry in entries" class="d-flex justify">
-            <div class="p-1 rounded border border-2 shadow mx-1" :style="{ backgroundColor: notebook.color}"></div>
-            <div class="bg-secondary p-2 rounded">
-              <p>{{ entry }}</p>
+          <div v-for="entry in entries" :key="entry.id">
+            <div>
+              <div class="d-flex justify my-2">
+                <div class="p-1 rounded border border-2 shadow mx-1" :style="{ backgroundColor: notebook.color}"></div>
+                <div class="bg-secondary p-2 shadow rounded my-1">
+                  <p>{{ entry.description }}</p>
+                  <div class="text-center">
+                    <img class="entry-image img-fluid rounded" :src="entry.img" :alt="'Figure from' + notebook.creator.name" :title="'Figure from' + notebook.creator.name">
+                  </div>
+                  <div>
+                    <div class="d-flex justify-content-between align-items-center mx-2 mt-2">
+                      <span class="text-end mb-0 italic">Last Edit: {{ entry.updatedAt.toLocaleDateString() + ' ' + entry.updatedAt.toLocaleTimeString() }}</span>
+                      <span role="button" class="px-3 btn btn-danger bold">X</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -80,5 +93,8 @@ return{
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+.entry-image {
+  max-height: 80dvh;
 }
 </style>
