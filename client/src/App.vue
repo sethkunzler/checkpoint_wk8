@@ -9,7 +9,7 @@
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="myNotebooks" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasScrollingLabel">📓 My Notebooks</h5>
-    <button class="btn btn-info fs-1 pt-0 px-3 my-0 border border-2" data-bs-target="#CreateNotebookModal" data-bs-toggle="modal" title="Add Notebook">+</button>
+    <button class="btn btn-info fs-1 pt-0 px-3 my-0 border border-2 " data-bs-target="#CreateNotebookModal" data-bs-toggle="modal" title="Add Notebook">+</button>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
@@ -61,23 +61,59 @@
     </div>
   </div>
 </div>
+<!-- NOTE Create New Entry Form Modal  -->
+<div class="modal fade" id="newEntryFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newEntryFormModalLabel">Write Your Entry</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form  @submit.prevent="createEntry()">
+          <div class="form-floating my-2">
+            <input v-model="editableEntryData.img" type="url" class="form-control" id="img" placeholder="https://" title="Image URL" maxlength="500">
+            <label for="img">Image Link</label>
+          </div>
+          <div class="form-floating my-2">
+            <textarea v-model="editableEntryData.description" type="text" rows="12" class="form-control" id="description" title="Click to begin typing" maxlength="2000" placeholder="Today I..."  required ></textarea>
+            <label for="description">New Note</label>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </template>
 
 
 <script>
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import NotebookCard from './components/NotebookCard.vue'
 import Pop from "./utils/Pop.js";
 import { notebooksService } from "./services/NotebooksService.js";
+import { entriesService } from "./services/EntriesService.js";
 import { Modal } from "bootstrap";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { Entry } from "./models/Entry.js";
+import { logger } from "./utils/Logger.js";
 
 export default {
   setup() {
     const editableNotebookData = ref({title: "My Notebook", coverImg: "https://images.unsplash.com/photo-1670974636823-1341d802d5b4?q=80&w=3864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",  icon: "mdi-pencil", color:"#FF0000"})
+    const editableEntryData = ref({descrition: "", img: ""})
     const router = useRouter()
+    const route = useRoute()
     const myIcons = [
       {value: 'mdi-database', label: 'Data base'}, 
       {value: 'mdi-cloud', label: 'Cloud'}, 
@@ -94,6 +130,7 @@ export default {
     return {
       myIcons,
       editableNotebookData,
+      editableEntryData,
       appState: computed(() => AppState),
       account: computed(() => AppState.account),
       notebooks: computed(() => AppState.notebooks),
@@ -103,6 +140,18 @@ export default {
           editableNotebookData.value = {title: "", coverImg: "",  icon: "mdi-pencil", color:"#F0F0F0"}
           Modal.getOrCreateInstance('#createNotebookModal').hide()
           router.push({ name: 'Notebook', params: {notebookId: notebook.id}})
+        } catch (error) {
+          Pop.error(error)
+        }
+      }, 
+      async createEntry() {
+        try {
+          const notebookId = route.params.notebookId
+          const entryData = editableEntryData.value
+          logger.log(entryData)
+          await entriesService.createEntry(notebookId, entryData)
+          editableEntryData.value = {img: "", description: ""}
+          Modal.getOrCreateInstance('#newEntryFormModal').hide()
         } catch (error) {
           Pop.error(error)
         }

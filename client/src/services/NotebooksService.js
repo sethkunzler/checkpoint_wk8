@@ -11,7 +11,6 @@ class NotebooksService {
     AppState.notebooks.push(newNotebook)
     return newNotebook
   }
- 
   async getMyNotebooks() {
     const response = await api.get('api/notebooks')
     // logger.log('api response "my notebooks":', response.data)
@@ -22,7 +21,7 @@ class NotebooksService {
     AppState.activeNotebook = null
     logger.log(`getting Notebook by ID: ${notebookId}`)
     const response = await api.get(`api/notebooks/${notebookId}`)
-    logger.log('📡 recieved notebook response', response.data)
+    logger.log('📡 received notebook response', response.data)
     AppState.activeNotebook = new Notebook(response.data)
   }
 }

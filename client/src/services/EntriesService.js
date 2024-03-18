@@ -12,5 +12,14 @@ class EntriesService {
     AppState.entries = newEntries
     logger.log('entries in App State', AppState.entries)
   }
+  async createEntry(notebookId, entryData) {
+    const response = await api.post('api/entries')
+    logger.log('📡 Created Entry Data', response.data)
+    const newEntry = new Entry(response.data)
+    if (entryData.notebookId !=  undefined) {
+      AppState.entries.push(newEntry)
+    }
+    return newEntry
+  }
 }
 export const entriesService = new EntriesService()

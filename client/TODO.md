@@ -11,7 +11,7 @@ Requirments:
 🟨The UI does not show in-appropriate actionable elements to invalid or unauthorized users
 
 
-❌Notebooks can be created
+✅Notebooks can be created
 ❌Notebooks can be edited and deleted by their creator
 ❌Deleting a notebook pushes the user back to their Account page
 
