@@ -38,8 +38,9 @@ class EntriesService {
     // TODO the validation for matching the notebook's creator ID to the user ID did not work 
     // needs to check if there is a notebook and then check if the creator Id matches the user ID
     // NOTE Made an edit to this that I want to check, but I am going to check something else first
-    if (newData.notebook){
-      if (newData.notebook.creatorId != userId) {
+    if (newData.notebookId){
+      const notebook = await notebooksService.getNotebookById(newData.notebookId)
+      if (notebook.creatorId != userId) {
         throw new Forbidden("YOU ARE NOT THE CREATOR OF THIS NOTEBOOK! ACCESS TO EDIT IS RESTRICTED TO THE CREATOR ONLY!")
       }
     }
