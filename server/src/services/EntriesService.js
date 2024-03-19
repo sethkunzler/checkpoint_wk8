@@ -4,11 +4,12 @@ import { notebooksService } from "./NotebooksService.js" // for validation - get
 
 class EntriesService {
   async createEntry(data) {
-    // FIXME the validation for the notebook's creator ID matching the user ID does not work
-    // const notebook = await notebooksService.getNotebookById(data.notebookId)
-    // if (notebook.creatorId != data.creatorId) {
-    //   throw new Forbidden("YOU ARE NOT THE CREATOR OF THIS NOTEBOOK! ACCESS TO EDIT IS RESTRICTED TO THE CREATOR ONLY!")
-    // }
+    // FIXME the validation for the notebook's creator ID matching the user ID stops it from creating a notebook without an ID
+    if (data.notebookId){
+      const notebook = await notebooksService.getNotebookById(data.notebookId)
+      if (notebook.creatorId != data.creatorId) {
+      throw new Forbidden("YOU ARE NOT THE CREATOR OF THIS NOTEBOOK! ACCESS TO EDIT IS RESTRICTED TO THE CREATOR ONLY!")
+    }}
     const entry = await dbContext.Entries.create(data)
     await entry.populate('notebook')
     await entry.populate('creator')
@@ -37,11 +38,11 @@ class EntriesService {
     // TODO the validation for matching the notebook's creator ID to the user ID did not work 
     // needs to check if there is a notebook and then check if the creator Id matches the user ID
     // NOTE Made an edit to this that I want to check, but I am going to check something else first
-    // if (newData.notebook){
-    //  if (newData.notebook.creatorId != userId) {
-    //   throw new Forbidden("YOU ARE NOT THE CREATOR OF THIS NOTEBOOK! ACCESS TO EDIT IS RESTRICTED TO THE CREATOR ONLY!")
-    // }
-    //}
+    if (newData.notebook){
+      if (newData.notebook.creatorId != userId) {
+        throw new Forbidden("YOU ARE NOT THE CREATOR OF THIS NOTEBOOK! ACCESS TO EDIT IS RESTRICTED TO THE CREATOR ONLY!")
+      }
+    }
 
     // description string
     entry.description = newData.description == undefined ? 

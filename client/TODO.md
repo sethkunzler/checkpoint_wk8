@@ -26,7 +26,7 @@ Requirments:
 ✅The Notebook details page is accessible to anyone regardless of auth status
 
 ✅The server API passes all tests in the Notebooks and Entries folders
-❌🟨The server API passes all the tests in Invalid Requests folder
+❌The server API passes all the tests in Invalid Requests folder
 
 🟨Application UI adheres to CodeWorks Design Doc Minimum Release, Web UI, and Accesibity Standards
 
