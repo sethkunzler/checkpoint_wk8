@@ -105,13 +105,12 @@ import { notebooksService } from "./services/NotebooksService.js";
 import { entriesService } from "./services/EntriesService.js";
 import { Modal } from "bootstrap";
 import { useRoute, useRouter } from "vue-router";
-import { Entry } from "./models/Entry.js";
 import { logger } from "./utils/Logger.js";
 
 export default {
   setup() {
     const editableNotebookData = ref({title: "My Notebook", coverImg: "https://images.unsplash.com/photo-1670974636823-1341d802d5b4?q=80&w=3864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",  icon: "mdi-pencil", color:"#FF0000"})
-    const editableEntryData = ref({descrition: "", img: ""})
+    const editableEntryData = ref({description: "", img: ""})
     const router = useRouter()
     const route = useRoute()
     const myIcons = [
