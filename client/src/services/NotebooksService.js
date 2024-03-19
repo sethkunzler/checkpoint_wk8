@@ -24,6 +24,13 @@ class NotebooksService {
     logger.log('📡 received notebook response', response.data)
     AppState.activeNotebook = new Notebook(response.data)
   }
+  async deleteNotebook(notebookId) {
+    const response = await api.delete(`api/notebooks/${notebookId}`)
+    const notebookIndex = AppState.notebooks.findIndex(notebook => notebook.id == notebookId)
+    if( notebookIndex == -1 ) {
+      throw new Error('findIndex is messed up dude!')
+    }
+    AppState.notebooks.splice(notebookIndex, 1)
+  }
 }
-
 export const notebooksService = new NotebooksService()

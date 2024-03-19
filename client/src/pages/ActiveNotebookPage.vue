@@ -31,18 +31,18 @@
                 <div class="p-1 rounded border border-2 shadow mx-1" 
                 :style="{ backgroundColor: notebook.color}">
                 </div>
-                <div class="bg-secondary p-2 shadow rounded my-1">
+                <div class="bg-secondary entry-card p-2 shadow rounded my-1">
                   <p>{{ entry.description }}</p>
                   <div class="text-center">
                     <img class="entry-image img-fluid rounded" 
                     :src="entry.img" 
-                    :alt="'Figure from' + notebook.creator.name" 
-                    :title="'Figure from' + notebook.creator.name">
+                    :alt="'Figure from' + entry.creator.name" 
+                    :title="'Figure from' + entry.creator.name">
                   </div>
                   <div>
                     <div class="d-flex justify-content-between align-items-center mx-2 mt-2">
-                      <span class="text-end mb-0 italic">
-                        Last Edit: {{ entry.updatedAt.toLocaleDateString() + ' ' + entry.updatedAt.toLocaleTimeString() }}
+                      <span class="text-end mb-0 italic pe-2">
+                        Last Edit: {{ entry.updatedAt.toLocaleDateString() + ' ' + entry.updatedAt.toLocaleTimeString() }} By: {{entry.creator.name }}
                       </span>
                       <span role="button" class="px-3 btn btn-danger bold">X</span>
                     </div>
@@ -51,6 +51,12 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-md-10 my-3 d-flex justify-content-end">
+          <RouterLink :to="{name: 'Account'}" class="text-light">
+            <!-- :class="theme == 'light' ? 'text-shadow' : 'text-glow'"-->
+            <button @click="removeNotebook(notebook.id)" type="button" class="btn btn-danger shadow"> Delete Notebook </button>
+          </RouterLink>
         </div>
       </section>
     </div>
@@ -62,38 +68,53 @@
 import { useRoute } from 'vue-router'
 import Pop from '../utils/Pop.js'
 import { notebooksService } from "../services/NotebooksService.js"
-import { computed, onMounted } from "vue"
+import { computed, onMounted, ref, watch } from "vue"
 import { AppState } from "../AppState.js"
 import { entriesService } from "../services/EntriesService.js"
-
+import { router } from "../router.js"
+// import { loadState, saveState } from "../utils/Store.js"
 export default {
-setup(){
-  const route = useRoute()
-  onMounted(() => {
-    getNotebookById()
-    getEntriesByNotebookId()
-  })
-  async function getNotebookById() {
-    try {
-      const notebookId = route.params.notebookId
-      await notebooksService.getNotebookById(notebookId)
-    } catch (error) {
-      Pop.error(error)
+  setup(){
+    const route = useRoute()
+    // const theme = ref(loadState('theme'))
+    onMounted(() => {
+      getNotebookById()
+      getEntriesByNotebookId()
+    })
+    async function getNotebookById() {
+      try {
+        const notebookId = route.params.notebookId
+        await notebooksService.getNotebookById(notebookId)
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
+    async function getEntriesByNotebookId() {
+      try {
+        const notebookId = route.params.notebookId
+        await entriesService.getEntriesByNotebookId(notebookId)
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
+    // watch(theme, )
+    return{
+      // theme,
+      notebook: computed(() => AppState.activeNotebook),
+      entries: computed(() => AppState.entries),
+      async removeNotebook(notebookId) {
+        try {
+          const yes = await Pop.confirm()
+          if (!yes) return
+          await notebooksService.deleteNotebook(notebookId)
+          AppState.activeNotebook = null
+          router.loadPage('Home')
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
     }
   }
-  async function getEntriesByNotebookId() {
-    try {
-      const notebookId = route.params.notebookId
-      await entriesService.getEntriesByNotebookId(notebookId)
-    } catch (error) {
-      Pop.error(error)
-    }
-  }
-return{
-  notebook: computed(() => AppState.activeNotebook),
-  entries: computed(() => AppState.entries)
-}
-}
 }
 </script>
 
@@ -102,11 +123,11 @@ return{
 .cover-image {
   min-width: 20dvw;
   max-width: 80dvw;
-  height: 20dvh;
+  height: 60dvh;
   object-fit: cover;
 }
 .cover-image-container {
-  background-color: rgba(0, 0, 0, 0.50);
+  background-color: rgba(0, 0, 0, 0.40);
   background-blend-mode: color;
   width: 100%;
   background-position: center;
@@ -115,5 +136,8 @@ return{
 }
 .entry-image {
   max-height: 80dvh;
+}
+.entry-card {
+  width: 100%;
 }
 </style>

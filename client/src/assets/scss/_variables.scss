@@ -42,7 +42,17 @@ $default-colors: (
   "white": $white,
   "light": $light,
   "dark": $dark,
-  "custom": #3ba5dc
+  "custom": #3ba5dc,
+);
+
+$light-theme-fun-styling: (
+  "text-glow": (text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.75)),
+  "text-shadow": (text-shadow: 1px 1px 4px black)
+);
+
+$dark-theme-fun-styling: (
+  "text-glow": (text-shadow: 1px 1px 4px black),
+  "text-shadow": (text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.75)),
 );
 
 @import "bootstrap";

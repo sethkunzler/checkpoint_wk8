@@ -13,7 +13,7 @@ Requirments:
 
 ✅Notebooks can be created
 ❌Notebooks can be edited and deleted by their creator
-❌Deleting a notebook pushes the user back to their Account page
+✅Deleting a notebook pushes the user back to their Account page
 
 ❌Entries can be created from the Account page and Notebook Details page
 ❌Entries can be edited
