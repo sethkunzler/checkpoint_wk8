@@ -26,7 +26,9 @@
         </div>
         <div class="col-md-10">
           <div v-for="entry in entries" :key="entry.id">
-            <div>
+            <EntryCard :entry="entry"/>
+            <!-- STUB  -->
+            <!-- <div>
               <div class="d-flex justify my-2">
                 <div class="p-1 rounded border border-2 shadow mx-1" 
                 :style="{ backgroundColor: notebook.color}">
@@ -44,18 +46,18 @@
                       <span class="text-end mb-0 italic pe-2">
                         Last Edit: {{ entry.updatedAt.toLocaleDateString() + ' ' + entry.updatedAt.toLocaleTimeString() }} By: {{entry.creator.name }}
                       </span>
-                      <span @click="deleteEntry(entry.id)" role="button" class="px-3 btn btn-danger bold">X</span>
+                      <span v-if="account.id == entry.creatorId" @click="deleteEntry(entry.id)" role="button" class="px-3 btn btn-danger bold" >X</span>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="col-md-10 my-3 d-flex justify-content-end">
           <RouterLink :to="{name: 'Account'}" class="text-light">
             <!-- :class="theme == 'light' ? 'text-shadow' : 'text-glow'"-->
-            <button @click="removeNotebook(notebook.id)" type="button" class="btn btn-danger shadow"> Delete Notebook </button>
+            <button v-if="account.id == notebook.creatorId" @click="removeNotebook(notebook.id)" type="button" class="btn btn-danger shadow"> Delete Notebook </button>
           </RouterLink>
         </div>
       </section>
@@ -72,6 +74,7 @@ import { computed, onMounted, ref, watch } from "vue"
 import { AppState } from "../AppState.js"
 import { entriesService } from "../services/EntriesService.js"
 import { router } from "../router.js"
+import EntryCard from "../components/EntryCard.vue"
 // import { loadState, saveState } from "../utils/Store.js"
 export default {
   setup(){
@@ -100,6 +103,7 @@ export default {
     // watch(theme, )
     return{
       // theme,
+      account: computed(() => AppState.account),
       notebook: computed(() => AppState.activeNotebook),
       entries: computed(() => AppState.entries),
       async removeNotebook(notebookId) {
@@ -113,18 +117,9 @@ export default {
         } catch (error) {
           Pop.error(error)
         }
-      },
-      async deleteEntry(entryId) {
-        try {
-          const yes = await Pop.confirm()
-          if (!yes) return 
-          const message = await entriesService.deleteEntry(entryId)
-          Pop.success(message)
-        } catch (error) {
-          Pop.error(error)
-        }
       }
     }
+    components: { EntryCard }
   }
 }
 </script>
@@ -144,11 +139,5 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-.entry-image {
-  max-height: 80dvh;
-}
-.entry-card {
-  width: 100%;
 }
 </style>

@@ -6,6 +6,16 @@
   </div>
   <div class="container">
     <section class="row">
+      <div class="col-12">
+        <h2>Unassigned Entries</h2>
+      </div>
+    </section>
+    <section class="row">
+      <div class="col-md-12">
+        
+      </div>
+    </section>
+    <section class="row">
       <div class="col-md-12">
         <h2>My Notebooks</h2>
       </div>
