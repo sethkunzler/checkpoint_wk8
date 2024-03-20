@@ -7,7 +7,21 @@
   <div class="container">
     <section class="row">
       <div class="col-12">
-        <h2>Unassigned Entries</h2>
+        <div class="d-flex justify-content-between align-items-center my-2">
+          <h2>Unassigned Entries</h2>
+          <button 
+          type="button" 
+          class="btn btn-info text-light" 
+          data-bs-toggle="modal" 
+          data-bs-target="#newEntryFormModal"> 
+            + Create New Entry 
+          </button>
+        </div>
+      </div>
+    </section>
+    <section class="row">
+      <div v-for="entry in entries" class="col-md-12">
+        <EntryCard :entry="entry" />
       </div>
     </section>
     <section class="row">
@@ -23,6 +37,7 @@
     <section class="row my-2">
       <div v-for="notebook in notebooks" :key="notebook.id" class="col-md-4 d-flex my-2">
         <NotebookCard :notebook="notebook" />
+        <!-- STUB stubbed card into a component -->
         <!-- <div class="rounded shadow border border-2 p-1"
         :style="{ backgroundColor: notebook.color }"></div>
         <div class="rounded border border-subtle px-3 pt-1 shadow selectable d-flex flex-column justify-content-between">
@@ -41,9 +56,14 @@ import { AppState } from '../AppState';
 import { notebooksService } from "../services/NotebooksService.js";
 import Pop from "../utils/Pop.js";
 import NotebookCard from '../components/NotebookCard.vue'
+import EntryCard from "../components/EntryCard.vue";
+import { entriesService } from "../services/EntriesService.js";
 export default {
   setup() {
-    onMounted(() => {getMyNotebooks()})
+    onMounted(() => {
+      getMyNotebooks()
+      getMyEntries()
+    })
     async function getMyNotebooks() {
       try {
         await notebooksService.getMyNotebooks()
@@ -51,9 +71,17 @@ export default {
         Pop.error(error)
       }
     }
+    async function getMyEntries() {
+      try {
+        await entriesService.getMyEntries()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
     return {
       account: computed(() => AppState.account),
-      notebooks: computed(() => AppState.notebooks.slice(0,9))
+      notebooks: computed(() => AppState.notebooks.slice(0,9)),
+      entries: computed(() => AppState.entries.reverse())
     }
   },
   components: { NotebookCard }

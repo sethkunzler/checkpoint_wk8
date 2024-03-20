@@ -27,7 +27,7 @@
         <div class="col-md-10">
           <div v-for="entry in entries" :key="entry.id">
             <EntryCard :entry="entry"/>
-            <!-- STUB  -->
+            <!-- STUB Original Entry Card  -->
             <!-- <div>
               <div class="d-flex justify my-2">
                 <div class="p-1 rounded border border-2 shadow mx-1" 
@@ -55,10 +55,13 @@
           </div>
         </div>
         <div class="col-md-10 my-3 d-flex justify-content-end">
-          <RouterLink :to="{name: 'Account'}" class="text-light">
-            <!-- :class="theme == 'light' ? 'text-shadow' : 'text-glow'"-->
-            <button v-if="account.id == notebook.creatorId" @click="removeNotebook(notebook.id)" type="button" class="btn btn-danger shadow"> Delete Notebook </button>
-          </RouterLink>
+          <!-- :class="theme == 'light' ? 'text-shadow' : 'text-glow'"-->
+          <button v-if="account.id == notebook.creatorId" 
+          @click="removeNotebook(notebook.id)" 
+          type="button" 
+          class="btn btn-danger shadow"> 
+            Delete Notebook 
+          </button>
         </div>
       </section>
     </div>
@@ -84,28 +87,32 @@ export default {
       getNotebookById()
       getEntriesByNotebookId()
     })
-    async function getNotebookById() {
+    const notebookId = route.params.notebookId
+    async function getNotebookById(notebookId) {
       try {
-        const notebookId = route.params.notebookId
         await notebooksService.getNotebookById(notebookId)
       } catch (error) {
         Pop.error(error)
       }
     }
-    async function getEntriesByNotebookId() {
+    async function getEntriesByNotebookId(notebookId) {
       try {
-        const notebookId = route.params.notebookId
         await entriesService.getEntriesByNotebookId(notebookId)
       } catch (error) {
         Pop.error(error)
       }
     }
+    watch(() => route.params.notebookId, () => {
+      getNotebookById(route.params.notebookId)
+      getEntriesByNotebookId(route.params.notebookId)
+    }, { immediate: true })
+
     // watch(theme, )
     return{
       // theme,
       account: computed(() => AppState.account),
       notebook: computed(() => AppState.activeNotebook),
-      entries: computed(() => AppState.entries),
+      entries: computed(() => AppState.entries.reverse()),
       async removeNotebook(notebookId) {
         try {
           const yes = await Pop.confirm()
@@ -113,13 +120,12 @@ export default {
           const message = await notebooksService.deleteNotebook(notebookId)
           Pop.confirm(message)
           AppState.activeNotebook = null
-          router.loadPage('Account')
+          router.push({ name: 'Account' })
         } catch (error) {
           Pop.error(error)
         }
       }
     }
-    components: { EntryCard }
   }
 }
 </script>

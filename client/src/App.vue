@@ -79,6 +79,12 @@
             <textarea v-model="editableEntryData.description" type="text" rows="12" class="form-control" id="description" title="Click to begin typing" maxlength="2000" placeholder="Today I..."  required ></textarea>
             <label for="description">New Note</label>
           </div>
+          <div class="form-floating mb-3">
+            <select v-model="editableEntryData.notebookId" class="form-select" id="icon">
+              <option v-for="notebook in notebooks" :key="notebook.id" :value="notebook.id">{{ notebook.title }}</option>
+            </select>
+            <label for="icon">Select Notebook</label>
+          </div>
           <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
@@ -96,7 +102,7 @@
 
 
 <script>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import NotebookCard from './components/NotebookCard.vue'
@@ -109,10 +115,10 @@ import { logger } from "./utils/Logger.js";
 
 export default {
   setup() {
-    const editableNotebookData = ref({title: "My Notebook", coverImg: "https://images.unsplash.com/photo-1670974636823-1341d802d5b4?q=80&w=3864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",  icon: "mdi-pencil", color:"#FF0000"})
-    const editableEntryData = ref({description: "", img: ""})
     const router = useRouter()
     const route = useRoute()
+    const editableNotebookData = ref({title: "My Notebook", coverImg: "https://images.unsplash.com/photo-1670974636823-1341d802d5b4?q=80&w=3864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",  icon: "mdi-pencil", color:"#FF0000"})
+    const editableEntryData = ref({description: "", img: "", notebookId: ""})
     const myIcons = [
       {value: 'mdi-database', label: 'Data base'}, 
       {value: 'mdi-cloud', label: 'Cloud'}, 
@@ -126,13 +132,17 @@ export default {
       {value:'mdi-account', label: 'Person'},
       {value:'mdi-shield', label: 'Shield'},
     ]
+    watch(() => route.params.notebookId, () => {
+      const editableEntryData = ref({description: "", img: ""})
+    }, { immediate: true })
     return {
       myIcons,
       editableNotebookData,
       editableEntryData,
       appState: computed(() => AppState),
       account: computed(() => AppState.account),
-      notebooks: computed(() => AppState.notebooks),
+      activeNotebook: computed(() => AppState.activeNotebook),
+      notebooks: computed(() => AppState.notebooks.reverse()),
       async createNotebook() {
         try {
           const notebook = await notebooksService.createNotebook(editableNotebookData.value)
@@ -145,12 +155,10 @@ export default {
       }, 
       async createEntry() {
         try {
-          const notebookId = route.params.notebookId
           const entryData = editableEntryData.value
-          entryData.notebookId = notebookId 
           logger.log(entryData)
-          await entriesService.createEntry(notebookId, entryData)
-          editableEntryData.value = {img: "", description: ""}
+          await entriesService.createEntry(entryData)
+          editableEntryData.value = {img: "", description: "", notebookId: ""}
           Modal.getOrCreateInstance('#newEntryFormModal').hide()
         } catch (error) {
           Pop.error(error)

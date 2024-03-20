@@ -1,10 +1,9 @@
 <template>
-  <p>Hello</p>
   <div>
     <div class="d-flex justify my-2">
-      <div v-if="!entry.notebookId" class="p-1 rounded border border-2 shadow mx-1 bg-o-orange">
+      <div v-if="!entry.notebook" class="p-1 rounded border border-2 shadow mx-1 bg-o-orange">
       </div>
-      <div v-if="entry.notebookId" class="p-1 rounded border border-2 shadow mx-1" 
+      <div v-if="entry.notebook" class="p-1 rounded border border-2 shadow mx-1" 
       :style="{ backgroundColor: entry.notebook.color }">
       </div>
       <div class="bg-secondary entry-card p-2 shadow rounded my-1">

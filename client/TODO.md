@@ -21,8 +21,7 @@ Requirments:
 ✅Entries can be deleted
 ❌Entries show their description, image, updatedAt timestamp and title of notebook (if assigned)
 
-❌The Notebook details page displays the coverImg
-, createdAt, updatedAt, title, color, icon
+❌The Notebook details page displays the coverImg, createdAt, updatedAt, title, color, icon
 ✅The Notebook details page displays all of it's entries (on navigation and refresh)
 ✅The Notebook details page is accessible to anyone regardless of auth status
 
