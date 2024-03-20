@@ -147,6 +147,7 @@ export default {
         try {
           const notebookId = route.params.notebookId
           const entryData = editableEntryData.value
+          entryData.notebookId = notebookId
           logger.log(entryData)
           await entriesService.createEntry(notebookId, entryData)
           editableEntryData.value = {img: "", description: ""}

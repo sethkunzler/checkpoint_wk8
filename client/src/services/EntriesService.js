@@ -2,6 +2,7 @@ import { AppState } from "../AppState.js"
 import { Entry } from "../models/Entry.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
+import { notebooksService } from "./NotebooksService.js"
 
 class EntriesService {
   async getEntriesByNotebookId(notebookId) {
@@ -13,12 +14,19 @@ class EntriesService {
     logger.log('entries in App State', AppState.entries)
   }
   async createEntry(notebookId, entryData) {
-    const response = await api.post('api/entries')
+    if (notebookId != undefined) {
+      const foundNotebook = await notebooksService.getNotebookById(notebookId)
+      if (foundNotebook != undefined){
+        entryData.notebookId = notebookId
+      }
+    }
+    const response = await api.post('api/entries', entryData)
     logger.log('📡 Created Entry Data', response.data)
     const newEntry = new Entry(response.data)
     if (entryData.notebookId !=  undefined) {
       AppState.entries.push(newEntry)
     }
+    logger.log(AppState.entries)
     return newEntry
   }
 }
