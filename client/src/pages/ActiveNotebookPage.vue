@@ -44,7 +44,7 @@
                       <span class="text-end mb-0 italic pe-2">
                         Last Edit: {{ entry.updatedAt.toLocaleDateString() + ' ' + entry.updatedAt.toLocaleTimeString() }} By: {{entry.creator.name }}
                       </span>
-                      <span role="button" class="px-3 btn btn-danger bold">X</span>
+                      <span @click="deleteEntry(entry.id)" role="button" class="px-3 btn btn-danger bold">X</span>
                     </div>
                   </div>
                 </div>
@@ -106,9 +106,20 @@ export default {
         try {
           const yes = await Pop.confirm()
           if (!yes) return
-          await notebooksService.deleteNotebook(notebookId)
+          const message = await notebooksService.deleteNotebook(notebookId)
+          Pop.confirm(message)
           AppState.activeNotebook = null
-          router.loadPage('Home')
+          router.loadPage('Account')
+        } catch (error) {
+          Pop.error(error)
+        }
+      },
+      async deleteEntry(entryId) {
+        try {
+          const yes = await Pop.confirm()
+          if (!yes) return 
+          const message = await entriesService.deleteEntry(entryId)
+          Pop.success(message)
         } catch (error) {
           Pop.error(error)
         }

@@ -29,5 +29,14 @@ class EntriesService {
     logger.log(AppState.entries)
     return newEntry
   }
+  async deleteEntry(entryId){
+    const response = await api.delete(`api/entries/${entryId}`)
+    const entryIndex = AppState.entries.findIndex(entry => entry.id == entryId)
+    if ( entryId == -1) {
+      throw new Error('findIndex in entries to delete, could not find entry to delete. entryId is -1')
+    }
+    AppState.entries.splice(entryIndex, 1)
+    return (` Entry ${response.description}... was deleted`)
+  }
 }
 export const entriesService = new EntriesService()

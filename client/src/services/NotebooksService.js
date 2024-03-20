@@ -31,6 +31,7 @@ class NotebooksService {
       throw new Error('findIndex is messed up dude!')
     }
     AppState.notebooks.splice(notebookIndex, 1)
+    return (`Notebook: "${response.data.title}" was deleted`)
   }
 }
 export const notebooksService = new NotebooksService()
