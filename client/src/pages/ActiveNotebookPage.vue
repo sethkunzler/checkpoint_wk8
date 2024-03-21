@@ -18,7 +18,7 @@
                 </span>
               </button>
             </h1>
-            <button v-if="account.id == notebook.creatorId" type="button" class="btn btn-info text-light" data-bs-toggle="modal"
+            <button v-if="account.id == notebook.creatorId" type="button" class="btn btn-primary text-light" data-bs-toggle="modal"
               data-bs-target="#newEntryFormModal" alt="click to create a new entry notebook" title="Click to create a New Entry">
               New Entry
             </button>
