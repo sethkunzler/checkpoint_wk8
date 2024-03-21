@@ -1,13 +1,13 @@
 <template>
   <!-- <h1>Hi</h1> -->
   <div class="rounded shadow border border-2 p-1" :style="{ backgroundColor: notebook.color }"></div>
-  <RouterLink :to="{name: 'Notebook', params: { notebookId: notebook.id}}" class="text-dark selectable rounded border border-subtle px-3 pt-1 shadow d-flex">
+  <RouterLink :to="{name: 'Notebook', params: { notebookId: notebook.id}}" class="text-dark selectable rounded border border-subtle px-3 pt-1 shadow d-flex" alt="a button that takes you to this notebook's page" title="Click to Navigate to this Notebook's Page">
     <div class="d-flex flex-column justify-content-between">
       <h3 class=""><span class="mdi text-glow" :class="notebook.icon" :style="{color: `${notebook.color}`}"></span> {{notebook.title}}</h3>
       <img class="img-fluid rounded shadow mb-2" :src="notebook.coverImg" :alt="notebook.title">
       <div class="d-flex justify-content-between align-items-center">
         <RouterLink :to="{name: 'Account'}" class="text-light">
-          <button @click="removeNotebook(notebook.id)" type="button" class="btn btn-danger p-1 px-2 mb-1"> Delete </button>
+          <button @click="removeNotebook(notebook.id)" type="button" class="btn btn-danger p-1 px-2 mb-1" alt="a button that deletes the notebook" title="Click to Delete the Notebook"> Delete </button>
         </RouterLink>
         <p class="text-end italic mb-1">Entries: <b>{{ notebook.entryCount }}</b></p>
       </div>

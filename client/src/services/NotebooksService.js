@@ -24,6 +24,11 @@ class NotebooksService {
     logger.log('📡 received notebook response', response.data)
     AppState.activeNotebook = new Notebook(response.data)
   }
+  async editNotebookData(notebookData, notebookId) {
+    const response = await api.put(`api/notebooks/${notebookId}`, notebookData)
+    AppState.activeNotebook = new Notebook(response.data)
+    // TODO splice the notebook from the array and replace it with its update
+  }
   async deleteNotebook(notebookId) {
     await api.delete(`api/notebooks/${notebookId}`)
     const notebookIndex = AppState.notebooks.findIndex(notebook => notebook.id == notebookId)

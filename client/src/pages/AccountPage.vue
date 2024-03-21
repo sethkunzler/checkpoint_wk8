@@ -11,9 +11,11 @@
           <h2>Unassigned Entries</h2>
           <button 
           type="button" 
-          class="btn btn-info text-light" 
+          class="btn btn-primary" 
           data-bs-toggle="modal" 
-          data-bs-target="#newEntryFormModal"> 
+          data-bs-target="#newEntryFormModal"
+          alt="a button creates a new entry"
+          title="Click to Create a New Entry"> 
             + Create New Entry 
           </button>
         </div>

@@ -9,7 +9,7 @@
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="myNotebooks" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasScrollingLabel">📓 My Notebooks</h5>
-    <button class="btn btn-info fs-1 pt-0 px-3 my-0 border border-2 " data-bs-target="#CreateNotebookModal" data-bs-toggle="modal" title="Add Notebook">+</button>
+    <button class="btn btn-primary fs-1 pt-0 px-3 my-0 border border-2 " data-bs-target="#CreateNotebookModal" data-bs-toggle="modal" title="Add Notebook">+</button>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
@@ -133,7 +133,13 @@ export default {
       {value:'mdi-shield', label: 'Shield'},
     ]
     watch(() => route.params.notebookId, () => {
-      const editableEntryData = ref({description: "", img: ""})
+      const editableEntryData = ref({description: "", img: "", notebook: ""})
+    }, { immediate: true })
+    watch(() => AppState.activeNotebook, () => {
+      notebooks: computed(()=> AppState.notebooks)
+    }, { immediate: true })
+    watch(() => AppState.entries, () => {
+      notebooks: computed(()=> AppState.notebooks)
     }, { immediate: true })
     return {
       myIcons,

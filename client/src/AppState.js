@@ -12,6 +12,6 @@ export const AppState = reactive({
   activeNotebook: null,
   /** @type {import('./models/Entry.js').Entry[]} */
   entries: [],
-
+  editingNotebook: false, 
 
 })
