@@ -29,13 +29,23 @@ class EntriesService {
     AppState.entries = newEntries
     logger.log('entries in App State', AppState.entries)
   }
+
+  async editEntry(entryId, entryData){
+    const response = await api.put(`api/entries/${entryId}`, entryData)
+    const entryIndex = AppState.entries.findIndex(entry => entry.id == entryId)
+    if (entryId == -1) {
+      throw new Error('findIndex in entries to edit, could not find entry to edit. entryId is -1')
+    }
+    const newEntry = new Entry(response.data)
+    AppState.entries.splice(entryIndex, 1, newEntry)
+  }
   async deleteEntry(entryId){
     const response = await api.delete(`api/entries/${entryId}`)
     const entryIndex = AppState.entries.findIndex(entry => entry.id == entryId)
     if ( entryId == -1) {
       throw new Error('findIndex in entries to delete, could not find entry to delete. entryId is -1')
     }
-    AppState.entries.splice(entryIndex, 1)
+    AppState.entries.splice(entryIndex, 1, )
     return (`Entry was deleted`)
   }
 }

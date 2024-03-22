@@ -6,9 +6,9 @@
     <router-view />
   </main>
 <!-- NOTE Notebooks off-canvas  -->
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="myNotebooks" aria-labelledby="offcanvasScrollingLabel">
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="myNotebooks" aria-labelledby="myNotebooksLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">📓 My Notebooks</h5>
+    <h5 class="offcanvas-title" id="myNotebooksLabel">📓 My Notebooks</h5>
     <button class="btn btn-primary fs-1 pt-0 px-3 my-0 border border-2 " data-bs-target="#createNotebookModal" data-bs-toggle="modal" title="Add Notebook">+</button>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
@@ -200,6 +200,11 @@ export default {
 }
 .text-glow {
   text-shadow: -1px -1px 2px rgba(255, 255, 255, 0.75);
+}
+.text-outline {
+  // background-color: blue;
+  -webkit-text-stroke: 1px var(--bs-light);
+  text-stroke: 1px var(--bs-light);
 }
 footer {
   display: grid;

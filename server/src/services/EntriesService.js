@@ -4,7 +4,6 @@ import { notebooksService } from "./NotebooksService.js" // for validation - get
 
 class EntriesService {
   async createEntry(data) {
-    // FIXME the validation for the notebook's creator ID matching the user ID stops it from creating a notebook without an ID
     if (data.notebookId){
       const notebook = await notebooksService.getNotebookById(data.notebookId)
       if (notebook.creatorId != data.creatorId) {

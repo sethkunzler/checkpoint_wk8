@@ -26,14 +26,21 @@ class NotebooksService {
   }
   async editNotebookData(notebookData, notebookId) {
     const response = await api.put(`api/notebooks/${notebookId}`, notebookData)
-    AppState.activeNotebook = new Notebook(response.data)
+    const notebookIndex = AppState.notebooks.findIndex(notebook => notebook.id == notebookId)
+    if( notebookIndex == -1 ) {
+      throw new Error('find notebookIndex to update could not be found')
+    }
+    const newNotebook = new Notebook(response.data)
+    AppState.notebooks.splice(notebookIndex, 1, newNotebook)
+    AppState.activeNotebook = newNotebook
+
     // TODO splice the notebook from the array and replace it with its update
   }
   async deleteNotebook(notebookId) {
     await api.delete(`api/notebooks/${notebookId}`)
     const notebookIndex = AppState.notebooks.findIndex(notebook => notebook.id == notebookId)
     if( notebookIndex == -1 ) {
-      throw new Error('findIndex is messed up dude!')
+      throw new Error('find notebookIndex to be deleted is messed up dude!')
     }
     AppState.notebooks.splice(notebookIndex, 1)
     return (`Notebook was deleted`)

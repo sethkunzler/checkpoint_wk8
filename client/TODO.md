@@ -15,8 +15,8 @@ Requirments:
 ✅Deleting a notebook pushes the user back to their Account page
 
 ✅Entries can be created from the Account page and Notebook Details page
-❌Entries can be edited
-❌Entries can be assigned to and moved between notebooks
+✅Entries can be edited
+✅Entries can be assigned to and moved between notebooks
 ✅Entries can be deleted
 ✅Entries show their description, image, updatedAt timestamp and title of notebook (if assigned)
 
@@ -27,7 +27,7 @@ Requirments:
 ✅The server API passes all tests in the Notebooks and Entries folders
 ✅The server API passes all the tests in Invalid Requests folder
 
-🟨Application UI adheres to CodeWorks Design Doc Minimum Release, Web UI, and Accesibity Standards
+✅🟨Application UI adheres to CodeWorks Design Doc Minimum Release, Web UI, and Accesibity Standards
 
 7 Stretch Goals
 
@@ -35,7 +35,7 @@ Requirments:
 ❌Entries can be tagged and filtered
 ❌Entries can be marked as hidden so only their creator can retrive them
 
-❌Forms are hidden and revealed within collapsible options
+✅Forms are hidden and revealed within collapsible options
 
 ❌Users can edit their account information
 
