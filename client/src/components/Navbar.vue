@@ -11,7 +11,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse text-center" id="navbarText">
-        <button v-if="account.id != undefined" class="btn bg-o-orange text-black selectable border-black border-subtle" type="button" data-bs-toggle="offcanvas" data-bs-target="#myNotebooks" aria-controls="offcanvasScrolling" alt="a button that pulls up a list of all my notebooks" title='Click to pull up all "My Notebooks"'>📓 My Notebooks</button>
+        <button v-if="account.id != undefined" class="btn bg-o-orange text-black selectable border-black border-subtle" typ="button" role="button" data-bs-toggle="offcanvas" data-bs-target="#myNotebooks" aria-controls="offcanvasScrolling" alt="a button that pulls up a list of all my notebooks" aria-describedby="My Notebook" title='Click to pull up all "My Notebooks"'>My Notebooks</button>
         <!-- REVIEW need a navbar? -->
         <!-- <ul class="navbar-nav me-auto">
           <li>

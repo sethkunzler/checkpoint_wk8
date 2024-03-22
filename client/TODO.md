@@ -6,13 +6,12 @@ Requirments:
 ✅🟨Users Can Register, Login, and Logout
 
 ✅🟨The UI ensures all forms are validated in accordance to their respective Schemas
-❌🟨The UI reactively updates appropriate lists for create and delete actions (Without Refresh)
-  -- TODO Entry count is not updating until after refresh
+✅🟨The UI reactively updates appropriate lists for create and delete actions (Without Refresh)
 ✅🟨The UI displays Router Links for notebooks with an entry count in an Offcanvas accessible on every page
 ✅🟨The UI does not show in-appropriate actionable elements to invalid or unauthorized users
 
 ✅Notebooks can be created
-Notebooks can be edited and deleted by their creator
+✅Notebooks can be edited and deleted by their creator
 ✅Deleting a notebook pushes the user back to their Account page
 
 ✅Entries can be created from the Account page and Notebook Details page

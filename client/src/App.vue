@@ -9,7 +9,7 @@
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="myNotebooks" aria-labelledby="offcanvasScrollingLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasScrollingLabel">📓 My Notebooks</h5>
-    <button class="btn btn-primary fs-1 pt-0 px-3 my-0 border border-2 " data-bs-target="#CreateNotebookModal" data-bs-toggle="modal" title="Add Notebook">+</button>
+    <button class="btn btn-primary fs-1 pt-0 px-3 my-0 border border-2 " data-bs-target="#createNotebookModal" data-bs-toggle="modal" title="Add Notebook">+</button>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
@@ -23,11 +23,11 @@
   </div>
 </div>
 <!-- NOTE Create Notebook modal -->
-<div class="modal fade" id="CreateNotebookModal" aria-hidden="true" aria-labelledby="CreateNotebookModalLabel" tabindex="-1">
+<div class="modal fade" id="createNotebookModal" aria-hidden="true" aria-labelledby="CreateNotebookModalLabel" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="CreateNotebookModalLabel">Create a New Notebook</h1>
+        <h1 class="modal-title fs-5" id="createNotebookModalLabel">Create a New Notebook</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <p class="opacity75 italic px-2 text-info">Clicking outside the box will dismiss it</p>
@@ -42,11 +42,11 @@
             <label for="coverImg">Cover Image Link</label>
           </div>
           <div class="form-floating mb-3">
-            <select v-model="editableNotebookData.icon" class="form-select" id="icon">
+            <select v-model="editableNotebookData.icon" class="form-select" id="icon-post-form">
               <option value="mdi-pencil" selected>Pencil</option>
               <option v-for="icon in myIcons" :key="icon.value" :value="icon.value">{{ icon.label }}</option>
             </select>
-            <label for="icon">Select Your Icon</label>
+            <label for="icon-post-form">Select Your Icon</label>
           </div>
           <div class="px-2">
             <label for="color" class="form-label">Notebook Color</label>
